@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --font-serif: 'Cormorant Garamond';
+    --font-sans: 'Montserrat';
+    --font-arabic: 'Amiri';
+  }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+  body { overflow-x: clip; }
+  /* iOS ≤ 15 ne connaît pas « clip » : sans ce repli, une page pourrait défiler horizontalement */
+  @supports not (overflow: clip) { html, body { overflow-x: hidden; } }
+  input, select, textarea { font-size: 16px; } /* évite le zoom auto sur iPhone */
+  body { @apply text-cream font-sans antialiased; font-variant-numeric: lining-nums; background-color: #0A2E1F; }
+  ::selection { background: #D4AF37; color: #12291B; }
+  h1, h2, h3, h4 { @apply font-serif; }
+  :focus-visible { outline: 2px solid #D4AF37; outline-offset: 3px; }
+}
+
+@layer components {
+  /* Texte or métallique (effet du logo) */
+  .text-gold-metal {
+    background: linear-gradient(100deg, #9c7a22 0%, #F3E3B0 18%, #D4AF37 34%, #B8922E 50%, #FFF4C8 62%, #C5A059 78%, #8F6F1F 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+  }
+  .text-gold-shine { @apply text-gold-metal animate-shine; }
+
+  .btn-gold {
+    @apply relative inline-flex min-h-[48px] items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3.5 text-center
+           text-[12px] font-semibold uppercase tracking-[0.14em] text-forest-900 sm:px-8 sm:text-[13px] sm:tracking-[0.2em] transition-all duration-500
+           bg-gold-metal bg-[length:200%_auto] hover:bg-right shadow-gold disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-outline {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-gold-500/70 px-6 py-3.5 text-center
+           text-[12px] font-semibold uppercase tracking-[0.14em] text-gold-300 sm:px-8 sm:text-[13px] sm:tracking-[0.2em] transition-all duration-500
+           hover:bg-gold-500 hover:text-forest-900;
+  }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.35em] text-gold-500; }
+  .gold-line { @apply h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent; }
+  /* Verre dépoli : le fond émeraude et les feuilles dorées restent visibles derrière */
+  .glass { background: rgba(255,255,255,.07); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border: 1px solid rgba(212,175,55,.2); }
+  .card-lux { @apply glass rounded-2xl; }
+  .input-lux {
+    @apply w-full rounded-xl border border-gold-500/25 bg-black/25 px-4 py-3 text-cream placeholder:text-cream/35
+           outline-none transition focus:border-gold-400 focus:ring-1 focus:ring-gold-400;
+  }
+  .label-lux { @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-300/90; }
+
+  /* Bokeh doux comme sur le logo */
+  .bokeh::before, .bokeh::after {
+    content: ''; position: absolute; border-radius: 9999px; pointer-events: none; filter: blur(60px);
+    background: radial-gradient(circle, rgba(212,175,55,.28), transparent 70%);
+  }
+  .bokeh::before { width: 420px; height: 420px; top: -120px; right: -80px; }
+  .bokeh::after { width: 360px; height: 360px; bottom: -140px; left: -100px; opacity: .7; }
+
+  /* Motif losange amazigh en filigrane */
+  .amazigh-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23C5A059' stroke-opacity='.07' stroke-width='1.2'%3E%3Cpath d='M40 8 L56 24 L40 40 L24 24Z M40 40 L56 56 L40 72 L24 56Z M8 40 L24 24 M72 40 L56 24 M8 40 L24 56 M72 40 L56 56'/%3E%3Ccircle cx='40' cy='24' r='3'/%3E%3Ccircle cx='40' cy='56' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
+
+/* ───────── Arabe (RTL) ───────── */
+html[dir='rtl'] { --font-sans: 'Tajawal'; --font-serif: 'Amiri'; }
+html[dir='rtl'] body { letter-spacing: 0; }
+/* L'espacement des lettres casse la liaison des lettres arabes */
+html[dir='rtl'] [class*='tracking-']:not(.latin, .latin *) { letter-spacing: 0 !important; }
+html[dir='rtl'] .latin, html[dir='rtl'] .latin * { font-family: 'Cormorant Garamond', Georgia, serif; }
+html[dir='rtl'] .flip-rtl { transform: scaleX(-1); }
+
+/* ───────── Fond global (toutes les pages, admin compris) ─────────
+   Calque fixe plutôt que « background-attachment: fixed » : ce dernier est ignoré
+   par Safari iOS (image énorme et floue). Un voile léger garde le texte lisible. */
+body::before, body::after {
+  content: ''; position: fixed; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(5,22,15,.34), rgba(5,22,15,.34)), url('/images/nadia-global-bg.jpg');
+  background-repeat: no-repeat;
+}
+body::before { inset: 0; background-size: cover; background-position: center; }
+body::after { display: none; }
+
+/* Écrans en portrait (mobile, tablette) : « cover » ne garderait que le centre uni,
+   on ancre donc l'image à gauche ET à droite pour garder les feuilles dorées des deux côtés */
+@media (max-aspect-ratio: 1/1) {
+  body::before, body::after {
+    display: block; top: 0; bottom: 0; width: 32%;
+    background-image: linear-gradient(rgba(5,22,15,.38), rgba(5,22,15,.38)), url('/images/nadia-global-bg.jpg');
+    background-size: auto 100%;
+  }
+  body::before { left: 0; right: auto; background-position: left center;
+    -webkit-mask-image: linear-gradient(90deg, #000 35%, transparent); mask-image: linear-gradient(90deg, #000 35%, transparent); }
+  body::after { right: 0; left: auto; background-position: right center;
+    -webkit-mask-image: linear-gradient(270deg, #000 35%, transparent); mask-image: linear-gradient(270deg, #000 35%, transparent); }
+}
