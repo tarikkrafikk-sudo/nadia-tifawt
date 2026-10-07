@@ -2,7 +2,7 @@
   "name": "nadia-tifawt",
   "version": "1.0.0",
   "private": true,
-  "description": "NADIA TIFAWT — Miel, Amlou & Cosmétiques naturels du Maroc",
+  "description": "NADIA TIFAWT - Miel, Amlou & Cosmétiques naturels du Maroc",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -19,10 +19,11 @@
     "framer-motion": "^11.11.0",
     "lucide-react": "^0.454.0",
     "mongoose": "^8.8.0",
-    "next": "14.2.35",
-    "react": "^18.3.1",
+    "next": "14.2.15",
+    "react": "^18.2.0",
     "react-dom": "^18.3.1",
-    "resend": "^6.32.0"
+    "resend": "^6.32.0",
+    "cloudinary": "^2.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
