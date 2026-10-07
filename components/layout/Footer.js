@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Instagram, MapPin, Phone, Mail } from 'lucide-react';
+import { Instagram, MapPin, Phone, Mail, Facebook, Music2 } from 'lucide-react';
 import Yaz from '@/components/ui/Yaz';
 import { Ornament } from '@/components/ui/Ornament';
 import { SITE, waLink } from '@/lib/utils';
@@ -36,6 +36,8 @@ export default async function Footer() {
           {locale !== 'ar' && <p dir="rtl" lang="ar" className="mt-3 w-fit font-arabic text-lg text-gold-300/80">عسل، أملو ومستحضرات طبيعية من قلب الأطلس</p>}
           <div className="mt-6 flex gap-3">
             <a href={SITE.instagram} target="_blank" rel="noopener" aria-label="Instagram" className="grid h-10 w-10 place-items-center rounded-full border border-gold-500/30 text-gold-300 transition hover:bg-gold-500 hover:text-forest-900"><Instagram className="h-4 w-4" /></a>
+            <a href={SITE.tiktok} target="_blank" rel="noopener" aria-label="TikTok" className="grid h-10 w-10 place-items-center rounded-full border border-gold-500/30 text-gold-300 transition hover:bg-gold-500 hover:text-forest-900"><Music2 className="h-4 w-4" /></a>
+            <a href={SITE.facebook} target="_blank" rel="noopener" aria-label="Facebook" className="grid h-10 w-10 place-items-center rounded-full border border-gold-500/30 text-gold-300 transition hover:bg-gold-500 hover:text-forest-900"><Facebook className="h-4 w-4" /></a>
             <a href={waLink(t('wa.hello'))} target="_blank" rel="noopener" aria-label="WhatsApp" className="grid h-10 w-10 place-items-center rounded-full border border-gold-500/30 text-gold-300 transition hover:bg-gold-500 hover:text-forest-900"><Phone className="h-4 w-4" /></a>
           </div>
         </div>
@@ -53,7 +55,7 @@ export default async function Footer() {
 
       <div className="container">
         <div className="grid gap-4 border-y border-gold-500/10 py-6 text-sm text-cream/60 sm:grid-cols-3">
-          <p className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold-500" /> <span>{t('footer.whatsapp', { p: '' })}<span dir="ltr">{SITE.phoneDisplay}</span></span></p>
+          <p className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold-500" /> <span>{t('footer.whatsapp', { p: '' })}<span dir="ltr">06 26 82 93 00</span></span></p>
           <p className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold-500" /> {t('footer.cities')}</p>
           <p className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold-500" /> contact@nadiatifawt.ma</p>
         </div>
