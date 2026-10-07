@@ -8,7 +8,7 @@ import { useI18n } from '@/context/I18nContext';
 import { waLink } from '@/lib/utils';
 
 const EASE = [0.22, 1, 0.36, 1];
-const PHONE = '0681325969';
+const PHONE = '0626829300';
 
 // Paillettes dorées : positions déterministes (pas d'écart serveur/client à l'hydratation)
 const PARTICLES = Array.from({ length: 34 }, (_, i) => {
