@@ -54,7 +54,7 @@ const jsonLd = {
   url: SITE.url,
   logo: `${SITE.url}/icon-512.png`,
   image: `${SITE.url}/images/logo-full.jpg`,
-  telephone: '+212681325969',
+  telephone: '+212626829300',
   areaServed: 'MA',
   currenciesAccepted: 'MAD',
   paymentAccepted: 'Cash on delivery, Wafacash',
