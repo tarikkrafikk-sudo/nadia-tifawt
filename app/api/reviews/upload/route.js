@@ -1,19 +1,22 @@
 import { NextResponse } from 'next/server';
-import { saveUpload } from '@/lib/uploads';
+import { saveUpload, IMAGE_TYPES, DOC_TYPES } from '@/lib/uploads';
 
-const hits = globalThis._ntReviewUploads || (globalThis._ntReviewUploads = new Map());
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-// Photos jointes à un avis client (3 max par avis, 10 photos / 10 min / IP)
+// Téléversement depuis l'admin : photos produits, photos d'avis, attestation (PDF accepté) → Cloudinary.
 export async function POST(req) {
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'local';
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < 10 * 60_000);
-  if (recent.length >= 10) return NextResponse.json({ error: 'Trop de photos envoyées, réessayez plus tard.' }, { status: 429 });
   try {
-    const url = await saveUpload((await req.formData()).get('file'), 'avis', { maxBytes: 5 * 1024 * 1024 });
-    hits.set(ip, [...recent, now]);
+    const form = await req.formData();
+    const file = form.get('file');
+    const kind = String(form.get('kind') || 'product');
+    const types = kind === 'onssa' ? DOC_TYPES : IMAGE_TYPES;
+    const prefix = { product: 'produit', review: 'avis', onssa: 'attestation-onssa' }[kind] || 'fichier';
+    const url = await saveUpload(file, prefix, { types });
     return NextResponse.json({ url });
   } catch (e) {
-    return NextResponse.json({ error: e.message }, { status: 400 });
+    console.error('[upload]', e);
+    const msg = e?.message || e?.error?.message || 'Téléversement impossible.';
+    return NextResponse.json({ error: msg }, { status: 400 });
   }
 }
