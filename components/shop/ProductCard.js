@@ -22,7 +22,7 @@ export default function ProductCard({ product, index = 0, image }) {
     >
       <Link href={`/produit/${product.slug}`} className="relative block aspect-[4/5] overflow-hidden" aria-label={product.name}>
         <Image src={image || product.images?.[0] || '/images/emblem-square.jpg'} alt={product.name} fill sizes="(max-width:768px) 50vw, 25vw"
-          className="object-cover transition duration-[1.2s] ease-out group-hover:scale-[1.06]" />
+          className="object-cover transition duration-[1.2s] ease-out lg:group-hover:scale-[1.06]" />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-950/70 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
         <div className="absolute start-3 top-3 flex flex-col items-start gap-1.5">
           {product.bestseller && <span className="rounded-full bg-terracotta px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-cream">{t('card.bestseller')}</span>}
