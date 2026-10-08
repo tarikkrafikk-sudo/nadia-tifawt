@@ -3,10 +3,12 @@ const nextConfig = {
   images: {
     unoptimized: true,
     dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+      { protocol: 'https', hostname: '**' },
+    ],
   },
-  experimental: { 
+  experimental: {
     serverComponentsExternalPackages: ['mongoose'],
     cpus: 1,
     isrMemoryCacheSize: 0,
