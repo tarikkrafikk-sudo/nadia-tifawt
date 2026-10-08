@@ -1,19 +1,21 @@
 import { NextResponse } from 'next/server';
-import { createReview } from '@/lib/data';
+import { saveUpload } from '@/lib/uploads';
 
-const hits = globalThis._ntReviewHits || (globalThis._ntReviewHits = new Map());
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-// Dépôt d'un avis par un client — toujours « en attente » jusqu'à validation dans /admin/avis
+const hits = globalThis._ntReviewUploads || (globalThis._ntReviewUploads = new Map());
+
+// Photos jointes à un avis client (3 max par avis, 10 photos / 10 min / IP)
 export async function POST(req) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'local';
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < 10 * 60_000);
+  if (recent.length >= 10) return NextResponse.json({ error: 'Trop de photos envoyées, réessayez plus tard.' }, { status: 429 });
   try {
-    const body = await req.json();
-    if (body.website) return NextResponse.json({ ok: true }); // pot de miel anti-spam
-    const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'local';
-    const last = hits.get(ip) || 0;
-    if (Date.now() - last < 60_000) return NextResponse.json({ error: 'Merci de patienter une minute avant un nouvel avis.' }, { status: 429 });
-    hits.set(ip, Date.now());
-    await createReview(body);
-    return NextResponse.json({ ok: true }, { status: 201 });
+    const url = await saveUpload((await req.formData()).get('file'), 'avis', { maxBytes: 5 * 1024 * 1024 });
+    hits.set(ip, [...recent, now]);
+    return NextResponse.json({ url });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 400 });
   }
