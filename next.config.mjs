@@ -9,7 +9,7 @@ const nextConfig = {
     ],
   },
   experimental: {
-    serverComponentsExternalPackages: ['mongoose', 'cloudinary'],
+    serverComponentsExternalPackages: ['mongoose'],
     cpus: 1,
     isrMemoryCacheSize: 0,
   },
