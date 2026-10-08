@@ -4,21 +4,17 @@ const nextConfig = {
     unoptimized: true,
     dangerouslyAllowSVG: true,
     remotePatterns: [
+      { protocol: 'https', hostname: 'res.cloudinary.com', pathname: '/eewe1vjr/**' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
-      { protocol: 'https', hostname: '**' },
     ],
   },
   experimental: {
-    serverComponentsExternalPackages: ['mongoose'],
+    serverComponentsExternalPackages: ['mongoose', 'cloudinary'],
     cpus: 1,
     isrMemoryCacheSize: 0,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
   productionBrowserSourceMaps: false,
 };
 
