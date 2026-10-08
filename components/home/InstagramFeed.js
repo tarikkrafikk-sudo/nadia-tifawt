@@ -3,9 +3,9 @@ import { SectionTitle } from '@/components/ui/Ornament';
 import { getI18n } from '@/lib/i18n/server';
 
 const LINKS = {
-  instagram: 'https://www.instagram.com/nadia.tifawt/',
-  facebook: 'https://www.facebook.com/nadiatifawt',
-  tiktok: 'https://www.tiktok.com/@nadiatifawt',
+  instagram: 'https://www.instagram.com/nadia_tifawte?stkn=cGo0aWpodmF4dWU3/',
+  facebook: 'https://www.facebook.com/profile.php?id=61595068295249',
+  tiktok: 'https://vm.tiktok.com/ZS9D4pLc3nhoh-NuKbE/',
 };
 
 /* ───────── Logos (SVG inline, aucune image à charger) ───────── */
